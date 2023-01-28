@@ -7,7 +7,7 @@ import {
   EmailValidator,
   AccountModel,
   AddAccount,
-  AddAcountModel,
+  AddAccountModel,
 } from "./signup-protocols";
 import { SignUpController } from "./signup";
 
@@ -28,7 +28,7 @@ const makeEmailValidator = (): EmailValidator => {
 
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
-    async add(account: AddAcountModel): Promise<AccountModel> {
+    async add(account: AddAccountModel): Promise<AccountModel> {
       const fakeAccount = {
         id: "valid_id",
         name: "valid_name",
