@@ -6,7 +6,7 @@
   "scripts": {
     "start": "sucrase-node src/main/server.ts",
     "test": "jest --passWithNoTests --noStackTrace --silent --no-coverage --runInBand",
-    "test:verbose": "jest --passWithNoTests --no-coverage --runInBand",
+    "test:verbose": "jest --passWithNoTests --no-coverage --runInBand --detectOpenHandles",
     "test:unit": "npm test -- --watch -c ./jest-unit-config.ts",
     "test:integration": "npm test -- --watch -c ./jest-integration-config.ts",
     "test:ci": "npm test -- --coverage"
