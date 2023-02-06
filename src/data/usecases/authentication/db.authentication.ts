@@ -27,7 +27,7 @@ export class DbAuthentication implements Authentication {
 
   async auth(authentication: AuthenticationModel): Promise<string> {
     const { password, email } = authentication;
-    const account = await this.loadAccountByEmailRepository.load(email);
+    const account = await this.loadAccountByEmailRepository.loadByEmail(email);
 
     if (account) {
       const isEqual = await this.hashComparer.compare(
@@ -37,7 +37,10 @@ export class DbAuthentication implements Authentication {
 
       if (isEqual) {
         const token = await this.encrypter.encrypt(account.id);
-        await this.updateAccessTokenRepository.update(account.id, token);
+        await this.updateAccessTokenRepository.updateAccessToken(
+          account.id,
+          token
+        );
         return token;
       }
     }
