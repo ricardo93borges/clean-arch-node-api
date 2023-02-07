@@ -1,5 +1,4 @@
 import { EmailValidator } from "../../protocols";
-import { badRequest, ok, serverError } from "../http/http-helper";
 import { EmailValidation } from "./email-validation";
 
 interface SutTypes {
@@ -29,7 +28,8 @@ describe("Email Validation", () => {
     const isValidSpy = jest.spyOn(emailValidatorStub, "isValid");
 
     const email = "email@email.com";
-    sut.validate(email);
+    const input = { email };
+    sut.validate(input);
     expect(isValidSpy).toHaveBeenCalledWith(email);
   });
 
