@@ -10,8 +10,8 @@ import {
   Authentication,
   Validation,
   AuthenticationModel,
-} from "./login-protocols";
-import { LoginController } from "./login";
+} from "./login-controller-protocols";
+import { LoginController } from "./login-controller";
 
 interface SutTypes {
   sut: LoginController;
