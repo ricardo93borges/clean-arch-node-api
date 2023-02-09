@@ -7,6 +7,8 @@
     "start": "node dist/main/server.js",
     "build": "rimraf dist && tsc",
     "dev": "sucrase-node src/main/server.ts",
+    "up": "npm run build && docker-compose up -d",
+    "down": "docker-compose down",
     "lint": "eslint",
     "test": "jest --passWithNoTests --noStackTrace --silent --no-coverage --runInBand",
     "test:verbose": "jest --passWithNoTests --no-coverage --runInBand --detectOpenHandles",
@@ -17,6 +19,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "12.x"
+  },
   "devDependencies": {
     "@shelf/jest-mongodb": "^4.1.6",
     "@types/bcrypt": "^5.0.0",
