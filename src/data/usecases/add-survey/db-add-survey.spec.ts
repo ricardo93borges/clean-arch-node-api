@@ -1,3 +1,4 @@
+import MockDate from "mockdate";
 import { AddSurveyModel, AddSurveyRepository } from "./db-add-survey-protocols";
 import { DbAddSurvey } from "./db-add-survey";
 
@@ -8,6 +9,7 @@ interface SutTypes {
 
 const makeFakeSurveyData = (): AddSurveyModel => ({
   question: "question",
+  date: new Date(),
   answers: [{ image: "image", answer: "answer" }],
 });
 
@@ -28,6 +30,14 @@ const makeSut = (): SutTypes => {
 };
 
 describe("DbAddSurvey Usecase", () => {
+  beforeAll(() => {
+    MockDate.set(new Date());
+  });
+
+  afterAll(() => {
+    MockDate.reset();
+  });
+
   it("should call AddSurveyRepository with correct values", async () => {
     const { sut, addSurveyRepositoryStub } = makeSut();
     const surveyData = makeFakeSurveyData();

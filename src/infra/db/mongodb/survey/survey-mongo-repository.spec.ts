@@ -27,6 +27,7 @@ describe("Survey Mongo Repository", () => {
 
     await sut.add({
       question: "question",
+      date: new Date(),
       answers: [{ image: "image", answer: "answer" }],
     });
     const survey = await collection.findOne({ question: "question" });
