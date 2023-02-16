@@ -82,16 +82,17 @@ describe("Account Mongo Repository", () => {
       expect(account.accessToken).toEqual("token");
     });
 
-    it("should return an account on loadByToken with role", async () => {
+    it("should return an account on loadByToken with admin role", async () => {
+      const role = "admin";
       const sut = makeSut();
       await accountCollection.insertOne({
         name: "name",
         email: "email@email.com",
         password: "password",
         accessToken: "token",
-        role: "role",
+        role,
       });
-      const account = await sut.loadByToken("token", "role");
+      const account = await sut.loadByToken("token", role);
 
       expect(account).toBeTruthy();
       expect(account.id).toBeTruthy();
@@ -99,7 +100,42 @@ describe("Account Mongo Repository", () => {
       expect(account.email).toEqual("email@email.com");
       expect(account.password).toEqual("password");
       expect(account.accessToken).toEqual("token");
-      expect(account.role).toEqual("role");
+      expect(account.role).toEqual(role);
+    });
+
+    it("should return null on loadByToken with invalid role", async () => {
+      const role = "admin";
+      const sut = makeSut();
+      await accountCollection.insertOne({
+        name: "name",
+        email: "email@email.com",
+        password: "password",
+        accessToken: "token",
+      });
+      const account = await sut.loadByToken("token", role);
+
+      expect(account).toBeFalsy();
+    });
+
+    it("should return an account on loadByToken with if user is admin", async () => {
+      const role = "admin";
+      const sut = makeSut();
+      await accountCollection.insertOne({
+        name: "name",
+        email: "email@email.com",
+        password: "password",
+        accessToken: "token",
+        role,
+      });
+      const account = await sut.loadByToken("token");
+
+      expect(account).toBeTruthy();
+      expect(account.id).toBeTruthy();
+      expect(account.name).toEqual("name");
+      expect(account.email).toEqual("email@email.com");
+      expect(account.password).toEqual("password");
+      expect(account.accessToken).toEqual("token");
+      expect(account.role).toEqual(role);
     });
 
     it("should return null if loadByToken fails", async () => {
