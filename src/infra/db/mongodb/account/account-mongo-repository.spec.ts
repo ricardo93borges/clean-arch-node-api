@@ -62,4 +62,50 @@ describe("Account Mongo Repository", () => {
       expect(account).toBeFalsy();
     });
   });
+
+  describe("loadByToken()", () => {
+    it("should return an account on loadByToken without role", async () => {
+      const sut = makeSut();
+      await accountCollection.insertOne({
+        name: "name",
+        email: "email@email.com",
+        password: "password",
+        accessToken: "token",
+      });
+      const account = await sut.loadByToken("token");
+
+      expect(account).toBeTruthy();
+      expect(account.id).toBeTruthy();
+      expect(account.name).toEqual("name");
+      expect(account.email).toEqual("email@email.com");
+      expect(account.password).toEqual("password");
+      expect(account.accessToken).toEqual("token");
+    });
+
+    it("should return an account on loadByToken with role", async () => {
+      const sut = makeSut();
+      await accountCollection.insertOne({
+        name: "name",
+        email: "email@email.com",
+        password: "password",
+        accessToken: "token",
+        role: "role",
+      });
+      const account = await sut.loadByToken("token", "role");
+
+      expect(account).toBeTruthy();
+      expect(account.id).toBeTruthy();
+      expect(account.name).toEqual("name");
+      expect(account.email).toEqual("email@email.com");
+      expect(account.password).toEqual("password");
+      expect(account.accessToken).toEqual("token");
+      expect(account.role).toEqual("role");
+    });
+
+    it("should return null if loadByToken fails", async () => {
+      const sut = makeSut();
+      const account = await sut.loadByToken("token");
+      expect(account).toBeFalsy();
+    });
+  });
 });
