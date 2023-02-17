@@ -1,4 +1,8 @@
-import { EmailInUserError, MissingParamError, ServerError } from "../../../errors";
+import {
+  EmailInUserError,
+  MissingParamError,
+  ServerError,
+} from "@/presentation/errors";
 import {
   AccountModel,
   AddAccount,
@@ -14,7 +18,7 @@ import {
   forbidden,
   ok,
   serverError,
-} from "../../../helpers/http/http-helper";
+} from "@/presentation/helpers/http/http-helper";
 
 interface SutTypes {
   sut: SignUpController;

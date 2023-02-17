@@ -1,7 +1,7 @@
 import { DbLoadAccountByToken } from "./db-load-account-by-token";
-import { Decrypter } from "../../protocols/criptography/decrypter";
+import { Decrypter } from "@/data/protocols/criptography/decrypter";
+import { LoadAccountByTokenRepository } from "@/data/protocols/db/account/load-account-by-token-repository";
 import { AccountModel } from "../add-account/db-add-account-protocols";
-import { LoadAccountByTokenRepository } from "../../protocols/db/account/load-account-by-token-repository";
 
 interface SutTypes {
   sut: DbLoadAccountByToken;

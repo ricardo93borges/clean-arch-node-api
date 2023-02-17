@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/main/server.js",
-    "build": "rimraf dist && tsc",
-    "build:watch": "rimraf dist && tsc -w",
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "build:watch": "rimraf dist && tsc -w -p tsconfig.build.json",
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "dev": "sucrase-node src/main/server.ts",
     "up": "npm run build && docker-compose up -d",
@@ -50,8 +50,12 @@
     "bcrypt": "^5.1.0",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
+    "module-alias": "^2.2.2",
     "mongodb": "^4.1.1",
     "nodemon": "^2.0.20",
     "validator": "^13.7.0"
+  },
+  "_moduleAliases": {
+    "@": "dist"
   }
 }

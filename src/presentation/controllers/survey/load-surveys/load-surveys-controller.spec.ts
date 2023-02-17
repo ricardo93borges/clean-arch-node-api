@@ -1,7 +1,11 @@
 import MockDate from "mockdate";
 import { LoadSurveysController } from "./load-surveys-controller";
 import { LoadSurveys, SurveyModel } from "./load-surveys-controller-protocols";
-import { noContent, ok, serverError } from "../../../helpers/http/http-helper";
+import {
+  noContent,
+  ok,
+  serverError,
+} from "@/presentation/helpers/http/http-helper";
 
 interface SutTypes {
   sut: LoadSurveysController;
