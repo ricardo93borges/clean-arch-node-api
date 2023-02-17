@@ -13,11 +13,11 @@ import {
 } from "./login-controller-protocols";
 import { LoginController } from "./login-controller";
 
-interface SutTypes {
+type SutTypes = {
   sut: LoginController;
   validationStub: Validation;
   authenticationStub: Authentication;
-}
+};
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {

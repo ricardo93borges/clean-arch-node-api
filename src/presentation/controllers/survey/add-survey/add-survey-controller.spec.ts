@@ -12,11 +12,11 @@ import {
   serverError,
 } from "@/presentation/helpers/http/http-helper";
 
-interface SutTypes {
+type SutTypes = {
   sut: AddSurveyController;
   validationStub: Validation;
   addSurveyStub: AddSurvey;
-}
+};
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {

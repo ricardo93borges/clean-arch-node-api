@@ -20,12 +20,12 @@ import {
   serverError,
 } from "@/presentation/helpers/http/http-helper";
 
-interface SutTypes {
+type SutTypes = {
   sut: SignUpController;
   addAccountStub: AddAccount;
   validationStub: Validation;
   authenticationStub: Authentication;
-}
+};
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {

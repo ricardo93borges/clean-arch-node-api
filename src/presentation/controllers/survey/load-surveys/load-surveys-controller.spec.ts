@@ -7,10 +7,10 @@ import {
   serverError,
 } from "@/presentation/helpers/http/http-helper";
 
-interface SutTypes {
+type SutTypes = {
   sut: LoadSurveysController;
   loadSurveysStub: LoadSurveys;
-}
+};
 
 const makeFakeSurveys = (): SurveyModel[] => {
   return [

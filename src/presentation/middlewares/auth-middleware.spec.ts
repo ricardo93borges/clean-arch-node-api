@@ -11,10 +11,10 @@ import {
   AccountModel,
 } from "./auth-middleware-protocols";
 
-interface SutTypes {
+type SutTypes = {
   sut: AuthMiddleware;
   loadAccountByTokenStub: LoadAccountByToken;
-}
+};
 
 const makeFakeAccount = (): AccountModel => ({
   id: "valid_id",
