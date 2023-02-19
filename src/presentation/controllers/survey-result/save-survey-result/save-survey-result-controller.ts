@@ -16,7 +16,6 @@ import { InvalidParamError } from "@/presentation/errors";
 
 export class SaveSurveyResultController implements Controller {
   constructor(
-    private readonly validation: Validation,
     private readonly saveSurveyResult: SaveSurveyResult,
     private readonly loadSurveyById: LoadSurveyById
   ) {}
