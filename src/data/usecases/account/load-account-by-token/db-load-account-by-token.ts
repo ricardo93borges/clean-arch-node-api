@@ -1,5 +1,5 @@
+import { AccountModel } from "@/data/usecases/account/add-account/db-add-account-protocols";
 import {
-  AccountModel,
   Decrypter,
   LoadAccountByToken,
   LoadAccountByTokenRepository,

@@ -1,6 +1,6 @@
+import { AccountModel } from "../add-account/db-add-account-protocols";
 import { DbLoadAccountByToken } from "./db-load-account-by-token";
 import {
-  AccountModel,
   Decrypter,
   LoadAccountByTokenRepository,
 } from "./db-load-account-by-token-protocols";

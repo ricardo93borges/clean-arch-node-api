@@ -74,7 +74,7 @@ describe("Survey Mongo Repository", () => {
   });
 
   describe("loadById()", () => {
-    it.only("should load survey by id on success", async () => {
+    it("should load survey by id on success", async () => {
       const res = await collection.insertOne({
         question: "question",
         date: new Date(),
