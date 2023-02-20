@@ -1,9 +1,10 @@
-import { AccountModel } from "../add-account/db-add-account-protocols";
+import { mockAccountModel } from "@/domain/test";
 import { DbLoadAccountByToken } from "./db-load-account-by-token";
 import {
   Decrypter,
   LoadAccountByTokenRepository,
 } from "./db-load-account-by-token-protocols";
+import { mockLoadAccountByTokenRepository, mockDecrypter } from "@/data/test";
 
 type SutTypes = {
   sut: DbLoadAccountByToken;
@@ -11,38 +12,9 @@ type SutTypes = {
   loadAccountByTokenRepositoryStub: LoadAccountByTokenRepository;
 };
 
-const makeFakeAccount = (): AccountModel => ({
-  id: "valid_id",
-  name: "valid_name",
-  email: "valid_email@email.com",
-  password: "valid_password",
-});
-
-const makeDecrypter = (): Decrypter => {
-  class DecrypterStub implements Decrypter {
-    async decrypt(value: string): Promise<string> {
-      return Promise.resolve("value");
-    }
-  }
-
-  return new DecrypterStub();
-};
-
-const makeLoadAccountByTokenRepository = (): LoadAccountByTokenRepository => {
-  class LoadAccountByTokenRepositoryStub
-    implements LoadAccountByTokenRepository
-  {
-    async loadByToken(token: string, role?: string): Promise<AccountModel> {
-      return Promise.resolve(makeFakeAccount());
-    }
-  }
-
-  return new LoadAccountByTokenRepositoryStub();
-};
-
 const makeSut = (): SutTypes => {
-  const decrypterStub = makeDecrypter();
-  const loadAccountByTokenRepositoryStub = makeLoadAccountByTokenRepository();
+  const decrypterStub = mockDecrypter();
+  const loadAccountByTokenRepositoryStub = mockLoadAccountByTokenRepository();
   const sut = new DbLoadAccountByToken(
     decrypterStub,
     loadAccountByTokenRepositoryStub
@@ -104,7 +76,7 @@ describe("DbLoadAccountByToken UseCase", () => {
   it("should return and account on success", async () => {
     const { sut } = makeSut();
     const account = await sut.load("token", "role");
-    expect(account).toEqual(makeFakeAccount());
+    expect(account).toEqual(mockAccountModel());
   });
 
   it("should throw if loadAccountByTokenRepository throws", async () => {

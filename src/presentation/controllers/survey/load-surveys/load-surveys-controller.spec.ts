@@ -6,39 +6,16 @@ import {
   ok,
   serverError,
 } from "@/presentation/helpers/http/http-helper";
+import { mockSurveyModels } from "@/domain/test";
+import { mockLoadSurveys } from "@/presentation/test";
 
 type SutTypes = {
   sut: LoadSurveysController;
   loadSurveysStub: LoadSurveys;
 };
 
-const makeFakeSurveys = (): SurveyModel[] => {
-  return [
-    {
-      id: "id",
-      question: "question",
-      date: new Date(),
-      answers: [
-        {
-          image: "image",
-          answer: "answer",
-        },
-      ],
-    },
-  ];
-};
-
-const makeLoadSurveys = (): LoadSurveys => {
-  class LoadSurveysStub implements LoadSurveys {
-    async load(): Promise<SurveyModel[]> {
-      return Promise.resolve(makeFakeSurveys());
-    }
-  }
-  return new LoadSurveysStub();
-};
-
 const makeSut = (): SutTypes => {
-  const loadSurveysStub = makeLoadSurveys();
+  const loadSurveysStub = mockLoadSurveys();
   const sut = new LoadSurveysController(loadSurveysStub);
   return { sut, loadSurveysStub };
 };
@@ -67,7 +44,7 @@ describe("LoadSurveys Controller", () => {
 
     const httpResponse = await sut.handle({});
 
-    expect(httpResponse).toEqual(ok(makeFakeSurveys()));
+    expect(httpResponse).toEqual(ok(mockSurveyModels()));
   });
 
   it("should return 204 if LoadSurveys returns empty", async () => {
