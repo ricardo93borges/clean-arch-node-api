@@ -9,7 +9,7 @@ import {
   HttpRequest,
   Authentication,
   Validation,
-  AuthenticationModel,
+  AuthenticationParams,
 } from "./login-controller-protocols";
 import { LoginController } from "./login-controller";
 
@@ -21,7 +21,7 @@ type SutTypes = {
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    auth(authentication: AuthenticationModel): Promise<string> {
+    auth(authentication: AuthenticationParams): Promise<string> {
       return Promise.resolve("token");
     }
   }

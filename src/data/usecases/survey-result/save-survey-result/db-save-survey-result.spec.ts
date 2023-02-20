@@ -1,6 +1,6 @@
 import MockDate from "mockdate";
 import {
-  SaveSurveyResultModel,
+  SaveSurveyResultParams,
   SaveSurveyResultRepository,
   SurveyResultModel,
 } from "./db-save-survey-result-protocols";
@@ -19,7 +19,7 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
   date: new Date(),
 });
 
-const makeFakeSurveyResultData = (): SaveSurveyResultModel => {
+const makeFakeSurveyResultData = (): SaveSurveyResultParams => {
   const { id, ...rest } = makeFakeSurveyResult();
   return rest;
 };
@@ -27,7 +27,7 @@ const makeFakeSurveyResultData = (): SaveSurveyResultModel => {
 const makeSaveSurveyResultRepository = (): SaveSurveyResultRepository => {
   class SaveSurveyResultRepositoryStub implements SaveSurveyResultRepository {
     async save(
-      surveyResultData: SaveSurveyResultModel
+      surveyResultData: SaveSurveyResultParams
     ): Promise<SurveyResultModel> {
       return Promise.resolve(makeFakeSurveyResult());
     }

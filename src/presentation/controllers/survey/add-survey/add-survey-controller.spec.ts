@@ -1,7 +1,7 @@
 import MockDate from "mockdate";
 import {
   AddSurvey,
-  AddSurveyModel,
+  AddSurveyParams,
   HttpRequest,
   Validation,
 } from "./add-survey-controller-protocols";
@@ -43,7 +43,7 @@ const makeValidation = (): Validation => {
 
 const makeAddSurvey = (): AddSurvey => {
   class AddSurveyStub implements AddSurvey {
-    add(data: AddSurveyModel): Promise<void> {
+    add(data: AddSurveyParams): Promise<void> {
       return Promise.resolve();
     }
   }

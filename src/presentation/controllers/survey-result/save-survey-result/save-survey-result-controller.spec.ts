@@ -3,7 +3,7 @@ import { SaveSurveyResultController } from "./save-survey-result-controller";
 import {
   HttpRequest,
   SaveSurveyResult,
-  SaveSurveyResultModel,
+  SaveSurveyResultParams,
   Validation,
   LoadSurveyById,
   SurveyModel,
@@ -18,7 +18,6 @@ import { InvalidParamError } from "@/presentation/errors";
 
 type SutTypes = {
   sut: SaveSurveyResultController;
-  validationStub: Validation;
   saveSurveyResultStub: SaveSurveyResult;
   loadSurveyByIdStub: LoadSurveyById;
 };
@@ -54,19 +53,9 @@ const makeFakeSurvey = (): SurveyModel => ({
   ],
 });
 
-const makeValidation = (): Validation => {
-  class ValidationStub implements Validation {
-    validate(input: any): Error {
-      return null;
-    }
-  }
-  const validationStub = new ValidationStub();
-  return validationStub;
-};
-
 const makeSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
-    save(data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+    save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
       return Promise.resolve(makeFakeSurveyResult());
     }
   }
@@ -85,17 +74,14 @@ const makeLoadSurveyById = (): LoadSurveyById => {
 };
 
 const makeSut = (): SutTypes => {
-  const validationStub = makeValidation();
   const saveSurveyResultStub = makeSaveSurveyResult();
   const loadSurveysByIdStub = makeLoadSurveyById();
   const sut = new SaveSurveyResultController(
-    validationStub,
     saveSurveyResultStub,
     loadSurveysByIdStub
   );
   return {
     sut,
-    validationStub,
     saveSurveyResultStub,
     loadSurveyByIdStub: loadSurveysByIdStub,
   };
