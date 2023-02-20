@@ -4,7 +4,6 @@ import {
   HttpRequest,
   SaveSurveyResult,
   SaveSurveyResultParams,
-  Validation,
   LoadSurveyById,
   SurveyModel,
   SurveyResultModel,
@@ -15,6 +14,8 @@ import {
   serverError,
 } from "@/presentation/helpers/http/http-helper";
 import { InvalidParamError } from "@/presentation/errors";
+import { mockSurveyResultModel, mockSurveyModel } from "@/domain/test";
+import { mockLoadSurveyById, mockSaveSurveyResult } from "@/presentation/test";
 
 type SutTypes = {
   sut: SaveSurveyResultController;
@@ -22,7 +23,7 @@ type SutTypes = {
   loadSurveyByIdStub: LoadSurveyById;
 };
 
-const makeFakeRequest = (): HttpRequest => ({
+const mockRequest = (): HttpRequest => ({
   body: {
     answer: "answer",
     date: new Date(),
@@ -33,49 +34,9 @@ const makeFakeRequest = (): HttpRequest => ({
   accountId: "accountId",
 });
 
-const makeFakeSurveyResult = (): SurveyResultModel => ({
-  id: "id",
-  surveyId: "surveyId",
-  accountId: "accountId",
-  answer: "answer",
-  date: new Date(),
-});
-
-const makeFakeSurvey = (): SurveyModel => ({
-  id: "id",
-  question: "question",
-  date: new Date(),
-  answers: [
-    {
-      image: "image",
-      answer: "answer",
-    },
-  ],
-});
-
-const makeSaveSurveyResult = (): SaveSurveyResult => {
-  class SaveSurveyResultStub implements SaveSurveyResult {
-    save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-      return Promise.resolve(makeFakeSurveyResult());
-    }
-  }
-
-  return new SaveSurveyResultStub();
-};
-
-const makeLoadSurveyById = (): LoadSurveyById => {
-  class LoadSurveysByIdStub implements LoadSurveyById {
-    loadById(id: string): Promise<SurveyModel> {
-      return Promise.resolve(makeFakeSurvey());
-    }
-  }
-
-  return new LoadSurveysByIdStub();
-};
-
 const makeSut = (): SutTypes => {
-  const saveSurveyResultStub = makeSaveSurveyResult();
-  const loadSurveysByIdStub = makeLoadSurveyById();
+  const saveSurveyResultStub = mockSaveSurveyResult();
+  const loadSurveysByIdStub = mockLoadSurveyById();
   const sut = new SaveSurveyResultController(
     saveSurveyResultStub,
     loadSurveysByIdStub
@@ -99,7 +60,7 @@ describe("SaveSurveyResultController Controller", () => {
   it("should call LoadSurveyById with correct values", async () => {
     const { sut, loadSurveyByIdStub } = makeSut();
     const loadByIdSpy = jest.spyOn(loadSurveyByIdStub, "loadById");
-    const request = makeFakeRequest();
+    const request = mockRequest();
 
     await sut.handle(request);
 
@@ -109,7 +70,7 @@ describe("SaveSurveyResultController Controller", () => {
   it("should return 403 if LoadSurveyById returns null", async () => {
     const { sut, loadSurveyByIdStub } = makeSut();
     jest.spyOn(loadSurveyByIdStub, "loadById").mockResolvedValueOnce(null);
-    const request = makeFakeRequest();
+    const request = mockRequest();
 
     const httpResponse = await sut.handle(request);
 
@@ -129,7 +90,7 @@ describe("SaveSurveyResultController Controller", () => {
 
   it("should return 403 if an invalid answer is provided", async () => {
     const { sut } = makeSut();
-    const httpRequest = makeFakeRequest();
+    const httpRequest = mockRequest();
     httpRequest.body.answer = "invalid_answer";
 
     const httpResponse = await sut.handle(httpRequest);
@@ -140,7 +101,7 @@ describe("SaveSurveyResultController Controller", () => {
   it("should call SaveSurveyResult with correct values", async () => {
     const { sut, saveSurveyResultStub } = makeSut();
     const saveSpy = jest.spyOn(saveSurveyResultStub, "save");
-    const request = makeFakeRequest();
+    const request = mockRequest();
 
     await sut.handle(request);
 
@@ -164,8 +125,8 @@ describe("SaveSurveyResultController Controller", () => {
   it("should return 200 on success", async () => {
     const { sut } = makeSut();
 
-    const httpResponse = await sut.handle(makeFakeRequest());
+    const httpResponse = await sut.handle(mockRequest());
 
-    expect(httpResponse).toEqual(ok(makeFakeSurveyResult()));
+    expect(httpResponse).toEqual(ok(mockSurveyResultModel()));
   });
 });

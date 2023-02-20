@@ -1,39 +1,16 @@
 import MockDate from "mockdate";
 import { DbLoadSurveyById } from "./db-load-survey-by-id";
-import {
-  LoadSurveyByIdRepository,
-  SurveyModel,
-} from "./db-load-survey-by-id-protocols";
+import { LoadSurveyByIdRepository } from "./db-load-survey-by-id-protocols";
+import { mockLoadSurveyByIdRepository } from "@/data/test";
+import { mockSurveyModel } from "@/domain/test";
 
 type SutTypes = {
   sut: DbLoadSurveyById;
   loadSurveyByIdRepositoryStub: LoadSurveyByIdRepository;
 };
 
-const makeFakeSurvey = (): SurveyModel => ({
-  id: "id",
-  question: "question",
-  date: new Date(),
-  answers: [
-    {
-      image: "image",
-      answer: "answer",
-    },
-  ],
-});
-
-const makeLoadSurveyByIdRepository = (): LoadSurveyByIdRepository => {
-  class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository {
-    async loadById(id: string): Promise<SurveyModel> {
-      return Promise.resolve(makeFakeSurvey());
-    }
-  }
-
-  return new LoadSurveyByIdRepositoryStub();
-};
-
 const makeSut = (): SutTypes => {
-  const loadSurveyByIdRepositoryStub = makeLoadSurveyByIdRepository();
+  const loadSurveyByIdRepositoryStub = mockLoadSurveyByIdRepository();
   const sut = new DbLoadSurveyById(loadSurveyByIdRepositoryStub);
   return { sut, loadSurveyByIdRepositoryStub };
 };
@@ -59,7 +36,7 @@ describe("DbLoadSurveyById Usecase", () => {
   it("should return a survey on success", async () => {
     const { sut } = makeSut();
     const survey = await sut.loadById("id");
-    expect(survey).toEqual(makeFakeSurvey());
+    expect(survey).toEqual(mockSurveyModel());
   });
 
   it("should throw if LoadSurveyByIdRepository throws", async () => {

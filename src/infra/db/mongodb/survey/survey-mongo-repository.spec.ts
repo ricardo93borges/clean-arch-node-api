@@ -1,23 +1,7 @@
 import { Collection } from "mongodb";
 import { MongoHelper } from "../helpers/mongo-helper";
 import { SurveyMongoRepository } from "./survey-mongo-repository";
-import { SurveyModel } from "@/domain/models/survey";
-
-const makeFakeSurveys = (): SurveyModel[] => {
-  return [
-    {
-      id: "id",
-      question: "question",
-      date: new Date(),
-      answers: [
-        {
-          image: "image",
-          answer: "answer",
-        },
-      ],
-    },
-  ];
-};
+import { mockSurveyModels } from "@/domain/test";
 
 let collection: Collection;
 describe("Survey Mongo Repository", () => {
@@ -56,12 +40,12 @@ describe("Survey Mongo Repository", () => {
 
   describe("loadAll()", () => {
     it("should loadAll surveys on success", async () => {
-      await collection.insertMany(makeFakeSurveys());
+      await collection.insertMany(mockSurveyModels());
       const sut = makeSut();
 
       const surveys = await sut.loadAll();
 
-      expect(surveys.length).toBe(1);
+      expect(surveys.length).toBe(2);
     });
 
     it("should load empty list", async () => {
