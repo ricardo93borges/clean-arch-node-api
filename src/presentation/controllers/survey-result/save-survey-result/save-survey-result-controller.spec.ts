@@ -10,6 +10,7 @@ import {
 } from "./save-survey-result-controller-protocols";
 import {
   forbidden,
+  noContent,
   ok,
   serverError,
 } from "@/presentation/helpers/http/http-helper";
@@ -122,11 +123,11 @@ describe("SaveSurveyResultController Controller", () => {
     expect(httpResponse).toEqual(serverError(new Error()));
   });
 
-  it("should return 200 on success", async () => {
+  it("should return 204 on success", async () => {
     const { sut } = makeSut();
 
     const httpResponse = await sut.handle(mockRequest());
 
-    expect(httpResponse).toEqual(ok(mockSurveyResultModel()));
+    expect(httpResponse).toEqual(noContent());
   });
 });

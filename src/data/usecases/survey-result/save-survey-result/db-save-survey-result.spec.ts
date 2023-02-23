@@ -36,15 +36,6 @@ describe("DbSaveSurveyResult Usecase", () => {
     expect(saveSpy).toHaveBeenCalledWith(surveyResultData);
   });
 
-  it("should return a survey on success", async () => {
-    const { sut } = makeSut();
-    const surveyResultData = mockFakeSurveyResultParams();
-
-    const survey = await sut.save(surveyResultData);
-
-    expect(survey).toEqual(mockSurveyResultModel());
-  });
-
   it("should throw if SaveSurveyResultRepository throws", async () => {
     const { sut, saveSurveyResultRepositoryStub } = makeSut();
     const surveyResultData = mockFakeSurveyResultParams();
