@@ -28,24 +28,27 @@ describe("DbLoadSurveyResult Usecase", () => {
   it("should call LoadSurveyResultRepository with correct values", async () => {
     const { sut, loadSurveyResultRepositoryStub } = makeSut();
     const surveyId = "surveyId";
+    const accountId = "accountId";
     const loadBySurveyIdSpy = jest.spyOn(
       loadSurveyResultRepositoryStub,
       "loadBySurveyId"
     );
 
-    await sut.load(surveyId);
+    await sut.load(surveyId, accountId);
 
-    expect(loadBySurveyIdSpy).toHaveBeenCalledWith(surveyId);
+    expect(loadBySurveyIdSpy).toHaveBeenCalledWith(surveyId, accountId);
   });
 
   it("should throw if LoadSurveyResultRepository throws", async () => {
     const { sut, loadSurveyResultRepositoryStub } = makeSut();
     const surveyId = "surveyId";
+    const accountId = "accountId";
+
     jest
       .spyOn(loadSurveyResultRepositoryStub, "loadBySurveyId")
       .mockRejectedValueOnce(new Error());
 
-    const promise = sut.load(surveyId);
+    const promise = sut.load(surveyId, accountId);
 
     expect(promise).rejects.toThrow();
   });
@@ -53,8 +56,9 @@ describe("DbLoadSurveyResult Usecase", () => {
   it("should return SurveyResultModel on success", async () => {
     const { sut } = makeSut();
     const surveyId = "surveyId";
+    const accountId = "accountId";
 
-    const surveyResult = await sut.load(surveyId);
+    const surveyResult = await sut.load(surveyId, accountId);
 
     expect(surveyResult).toEqual(mockSurveyResultModel());
   });
