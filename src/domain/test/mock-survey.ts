@@ -2,13 +2,17 @@ import { SurveyModel } from "@/domain/models/survey";
 import { AddSurveyParams } from "@/domain/usecases/add-survey";
 
 export const mockSurveyModel = (): SurveyModel => ({
-  id: "id",
+  id: "surveyId",
   question: "question",
   date: new Date(),
   answers: [
     {
       image: "image",
       answer: "answer",
+    },
+    {
+      image: "image",
+      answer: "answer_2",
     },
   ],
 });
