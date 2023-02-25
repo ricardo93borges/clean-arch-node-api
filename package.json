@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node dist/main/server.js",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "postbuild": "copyfile -u 1 public/**/* dist/static",
     "build:watch": "rimraf dist && tsc -w -p tsconfig.build.json",
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "dev": "sucrase-node src/main/server.ts",
@@ -36,6 +37,7 @@
     "@types/validator": "^13.7.11",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
     "@typescript-eslint/parser": "^5.46.0",
+    "copyfiles": "^2.4.1",
     "git-commit-msg-linter": "^4.5.0",
     "jest": "^29.4.0",
     "mockdate": "^3.0.5",
