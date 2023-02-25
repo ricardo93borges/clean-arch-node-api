@@ -5,12 +5,7 @@ import {
 } from "@/presentation/helpers/http/http-helper";
 import { AccessDeniedError } from "@/presentation/errors";
 import { AuthMiddleware } from "./auth-middleware";
-import {
-  LoadAccountByToken,
-  HttpRequest,
-  AccountModel,
-} from "./auth-middleware-protocols";
-import { mockAccountModel } from "@/domain/test";
+import { LoadAccountByToken, HttpRequest } from "./auth-middleware-protocols";
 import { mockLoadAccountByToken } from "../test";
 
 type SutTypes = {

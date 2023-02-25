@@ -6,6 +6,7 @@ import {
   Authentication,
   AuthenticationParams,
 } from "@/domain/usecases/authentication";
+import { AuthenticationModel } from "@/domain/models/authentication";
 
 export const mockAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
@@ -18,8 +19,8 @@ export const mockAddAccount = (): AddAccount => {
 
 export const mockAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    auth(authentication: AuthenticationParams): Promise<string> {
-      return Promise.resolve("token");
+    auth(authentication: AuthenticationParams): Promise<AuthenticationModel> {
+      return Promise.resolve({ accessToken: "token", name: "any_name" });
     }
   }
   return new AuthenticationStub();

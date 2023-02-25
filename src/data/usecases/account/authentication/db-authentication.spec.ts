@@ -106,7 +106,7 @@ describe("DbAuthentication Usecase", () => {
   it("should call Encrypter with correct id", async () => {
     const { sut } = makeSut();
     const accessToken = await sut.auth(mockAuthentication());
-    expect(accessToken).toBe("token");
+    expect(accessToken).toEqual({ accessToken: "token", name: "any_name" });
   });
 
   it("should call UpdateAccessTokenRepository with correct values", async () => {
