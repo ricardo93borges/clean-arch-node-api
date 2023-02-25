@@ -1,6 +1,6 @@
 import MockDate from "mockdate";
 import { LoadSurveysController } from "./load-surveys-controller";
-import { LoadSurveys, SurveyModel } from "./load-surveys-controller-protocols";
+import { HttpRequest, LoadSurveys } from "./load-surveys-controller-protocols";
 import {
   noContent,
   ok,
@@ -13,6 +13,8 @@ type SutTypes = {
   sut: LoadSurveysController;
   loadSurveysStub: LoadSurveys;
 };
+
+const mockRequest = (): HttpRequest => ({ accountId: "accountId" });
 
 const makeSut = (): SutTypes => {
   const loadSurveysStub = mockLoadSurveys();
@@ -29,20 +31,21 @@ describe("LoadSurveys Controller", () => {
     MockDate.reset();
   });
 
-  it("should call LoadSurveys", async () => {
+  it("should call LoadSurveys with correct value", async () => {
     const { sut, loadSurveysStub } = makeSut();
     const loadSpy = jest.spyOn(loadSurveysStub, "load");
+    const httpRequest = mockRequest();
 
-    await sut.handle({});
+    await sut.handle(httpRequest);
 
-    expect(loadSpy).toHaveBeenCalled();
+    expect(loadSpy).toHaveBeenCalledWith(httpRequest.accountId);
   });
 
   it("should return 200 on success", async () => {
     const { sut, loadSurveysStub } = makeSut();
     jest.spyOn(loadSurveysStub, "load");
 
-    const httpResponse = await sut.handle({});
+    const httpResponse = await sut.handle(mockRequest());
 
     expect(httpResponse).toEqual(ok(mockSurveyModels()));
   });
@@ -51,7 +54,7 @@ describe("LoadSurveys Controller", () => {
     const { sut, loadSurveysStub } = makeSut();
     jest.spyOn(loadSurveysStub, "load").mockResolvedValueOnce([]);
 
-    const httpResponse = await sut.handle({});
+    const httpResponse = await sut.handle(mockRequest());
 
     expect(httpResponse).toEqual(noContent());
   });
@@ -60,7 +63,7 @@ describe("LoadSurveys Controller", () => {
     const { sut, loadSurveysStub } = makeSut();
     jest.spyOn(loadSurveysStub, "load").mockRejectedValueOnce(new Error());
 
-    const httpResponse = await sut.handle({});
+    const httpResponse = await sut.handle(mockRequest());
 
     expect(httpResponse).toEqual(serverError(new Error()));
   });
