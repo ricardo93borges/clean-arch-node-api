@@ -51,7 +51,7 @@ describe("Survey Routes", () => {
         .expect(403);
     });
 
-    it("should return 200 on save survey result with access token", async () => {
+    it("should return 204 on save survey result with access token", async () => {
       const { accessToken } = await makeAccountWithToken("admin");
 
       const survey = await surveyCollection.insertOne({
@@ -66,7 +66,30 @@ describe("Survey Routes", () => {
         .put(`/api/surveys/${surveyId}/results`)
         .set("x-access-token", accessToken)
         .send({ answer: "answer" })
-        .expect(403);
+        .expect(204);
+    });
+  });
+
+  describe("GET /surveys/:surveyId/results", () => {
+    it("should return 403 on load survey result without access token", async () => {
+      await request(app).get("/api/surveys/1/results").expect(403);
+    });
+
+    it("should return 200 on load survey result with access token", async () => {
+      const { accessToken } = await makeAccountWithToken("admin");
+
+      const survey = await surveyCollection.insertOne({
+        question: "question",
+        date: new Date(),
+        answers: [{ image: "image", answer: "answer" }],
+      });
+
+      const surveyId = survey.insertedId.toHexString();
+
+      await request(app)
+        .get(`/api/surveys/${surveyId}/results`)
+        .set("x-access-token", accessToken)
+        .expect(200);
     });
   });
 });
