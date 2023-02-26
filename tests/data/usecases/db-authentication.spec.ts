@@ -5,11 +5,13 @@ import {
   mockLoadAccountByEmailRepository,
   mockUpdateAccessTokenRepository,
 } from "@/tests/data/mocks";
-import { Encrypter } from "@/data/protocols/criptography/encrypter";
-import { HashComparer } from "@/data/protocols/criptography/hash-comparer";
-import { LoadAccountByEmailRepository } from "@/data/usecases/account/add-account/db-add-account-protocols";
-import { UpdateAccessTokenRepository } from "@/data/usecases/account/authentication/db-authentication-protocols";
-import { DbAuthentication } from "@/data/usecases/account/authentication/db.authentication";
+import { Encrypter } from "@/data/protocols/cryptography/encrypter";
+import { HashComparer } from "@/data/protocols/cryptography/hash-comparer";
+import { DbAuthentication } from "@/data/usecases/db-authentication";
+import {
+  LoadAccountByEmailRepository,
+  UpdateAccessTokenRepository,
+} from "@/data/protocols";
 
 type SutTypes = {
   sut: DbAuthentication;

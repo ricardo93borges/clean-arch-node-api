@@ -4,11 +4,10 @@ import {
   noContent,
   serverError,
 } from "@/presentation/helpers/http/http-helper";
-import { mockValidation } from "@/validation/test";
-import { mockAddSurvey } from "@/tests/presentation/mocks";
-import { AddSurveyController } from "@/presentation/controllers/survey/add-survey/add-survey-controller";
+import { mockAddSurvey, mockValidation } from "@/tests/presentation/mocks";
 import { HttpRequest, Validation } from "@/presentation/protocols";
-import { AddSurvey } from "@/presentation/controllers/survey/add-survey/add-survey-controller-protocols";
+import { AddSurveyController } from "@/presentation/controllers";
+import { AddSurvey } from "@/domain/usecases";
 
 type SutTypes = {
   sut: AddSurveyController;

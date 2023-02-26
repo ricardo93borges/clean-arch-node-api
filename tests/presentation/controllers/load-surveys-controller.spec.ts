@@ -4,13 +4,11 @@ import {
   ok,
   serverError,
 } from "@/presentation/helpers/http/http-helper";
-import { LoadSurveysController } from "@/presentation/controllers/survey/load-surveys/load-surveys-controller";
-import {
-  HttpRequest,
-  LoadSurveys,
-} from "@/presentation/controllers/survey/load-surveys/load-surveys-controller-protocols";
 import { mockLoadSurveys } from "../mocks";
 import { mockSurveyModels } from "@/tests/domain/mocks";
+import { LoadSurveysController } from "@/presentation/controllers";
+import { LoadSurveys } from "@/domain/usecases";
+import { HttpRequest } from "@/presentation/protocols";
 
 type SutTypes = {
   sut: LoadSurveysController;

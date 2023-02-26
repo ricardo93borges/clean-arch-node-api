@@ -1,9 +1,8 @@
 import { Collection, ObjectId } from "mongodb";
-import { MongoHelper } from "@/infra/db/mongodb/helpers/mongo-helper";
-import { SurveyResultMongoRepository } from "@/infra/db/mongodb/survey-result/survey-result-mongo-repository";
 import { SurveyModel } from "@/domain/models/survey";
 import { AccountModel } from "@/domain/models/account";
 import { mockAccountParams, mockAddSurveyParams } from "@/tests/domain/mocks";
+import { MongoHelper, SurveyResultMongoRepository } from "@/infra/db/mongodb";
 
 let surveyCollection: Collection;
 let surveyResultCollection: Collection;

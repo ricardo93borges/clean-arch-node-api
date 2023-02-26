@@ -1,7 +1,6 @@
 import { Collection } from "mongodb";
-import { MongoHelper } from "@/infra/db/mongodb/helpers";
-import { AccountMongoRepository } from "@/infra/db/mongodb/account/account-mongo-repository";
 import { mockAccountParams } from "@/tests/domain/mocks";
+import { AccountMongoRepository, MongoHelper } from "@/infra/db/mongodb";
 
 let accountCollection: Collection;
 describe("Account Mongo Repository", () => {

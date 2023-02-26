@@ -1,8 +1,8 @@
 import MockDate from "mockdate";
-import { DbAddSurvey } from "@/data/usecases/survey/add-survey/db-add-survey";
-import { AddSurveyRepository } from "@/data/usecases/survey/add-survey/db-add-survey-protocols";
 import { mockAddSurveyRepository } from "@/tests/data/mocks";
 import { mockAddSurveyParams } from "@/tests/domain/mocks";
+import { DbAddSurvey } from "@/data/usecases";
+import { AddSurveyRepository } from "@/data/protocols";
 
 type SutTypes = {
   sut: DbAddSurvey;

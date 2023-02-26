@@ -3,9 +3,9 @@ import {
   mockDecrypter,
   mockLoadAccountByTokenRepository,
 } from "@/tests/data/mocks";
-import { Decrypter } from "@/data/protocols/criptography/decrypter";
-import { DbLoadAccountByToken } from "@/data/usecases/account/load-account-by-token/db-load-account-by-token";
-import { LoadAccountByTokenRepository } from "@/data/usecases/account/load-account-by-token/db-load-account-by-token-protocols";
+import { Decrypter } from "@/data/protocols/cryptography/decrypter";
+import { DbLoadAccountByToken } from "@/data/usecases";
+import { LoadAccountByTokenRepository } from "@/data/protocols";
 
 type SutTypes = {
   sut: DbLoadAccountByToken;

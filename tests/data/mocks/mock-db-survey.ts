@@ -1,8 +1,8 @@
 import { AddSurveyRepository } from "@/data/protocols/db/survey/add-survey-repository";
-import { AddSurveyParams } from "@/data/usecases/survey/add-survey/db-add-survey-protocols";
 import { LoadSurveyByIdRepository } from "@/data/protocols/db/survey/load-survey-by-id-repository";
-import { SurveyModel } from "@/data/usecases/survey/load-survey-by-id/db-load-survey-by-id-protocols";
 import { LoadSurveysRepository } from "@/data/protocols/db/survey/load-surveys-repository";
+import { SurveyModel } from "@/domain/models";
+import { AddSurveyParams } from "@/domain/usecases";
 import { mockSurveyModel, mockSurveyModels } from "@/tests/domain/mocks";
 
 export const mockAddSurveyRepository = (): AddSurveyRepository => {

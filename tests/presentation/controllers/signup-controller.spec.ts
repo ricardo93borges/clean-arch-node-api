@@ -9,15 +9,14 @@ import {
   ok,
   serverError,
 } from "@/presentation/helpers/http/http-helper";
-import { mockValidation } from "@/validation/test";
-import { SignUpController } from "@/presentation/controllers/login/signup/signup-controller";
 import {
-  AddAccount,
-  Authentication,
-  HttpRequest,
-  Validation,
-} from "@/presentation/controllers/login/signup/signup-controller-protocols";
-import { mockAddAccount, mockAuthentication } from "@/tests/presentation/mocks";
+  mockAddAccount,
+  mockAuthentication,
+  mockValidation,
+} from "@/tests/presentation/mocks";
+import { SignUpController } from "@/presentation/controllers";
+import { AddAccount, Authentication } from "@/domain/usecases";
+import { HttpRequest, Validation } from "@/presentation/protocols";
 
 type SutTypes = {
   sut: SignUpController;

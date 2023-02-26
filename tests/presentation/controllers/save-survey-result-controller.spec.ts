@@ -5,16 +5,14 @@ import {
   serverError,
 } from "@/presentation/helpers/http/http-helper";
 import { InvalidParamError } from "@/presentation/errors";
-import { SaveSurveyResultController } from "@/presentation/controllers/survey-result/save-survey-result/save-survey-result-controller";
-import {
-  HttpRequest,
-  LoadSurveyById,
-  SaveSurveyResult,
-} from "@/presentation/controllers/survey-result/load-survey-result/load-survey-result-controller-protocols";
 import {
   mockLoadSurveyById,
   mockSaveSurveyResult,
 } from "@/tests/presentation/mocks";
+import { SaveSurveyResultController } from "@/presentation/controllers";
+import { SaveSurveyResult } from "@/domain/usecases";
+import { LoadSurveyById } from "@/domain/usecases/load-survey-by-id";
+import { HttpRequest } from "@/presentation/protocols";
 
 type SutTypes = {
   sut: SaveSurveyResultController;

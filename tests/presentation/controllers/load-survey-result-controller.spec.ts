@@ -5,17 +5,15 @@ import {
   serverError,
 } from "@/presentation/helpers/http/http-helper";
 import { InvalidParamError } from "@/presentation/errors";
-import { LoadSurveyResultController } from "@/presentation/controllers/survey-result/load-survey-result/load-survey-result-controller";
-import {
-  HttpRequest,
-  LoadSurveyById,
-  LoadSurveyResult,
-} from "@/presentation/controllers/survey-result/load-survey-result/load-survey-result-controller-protocols";
 import {
   mockLoadSurveyById,
   mockLoadSurveyResult,
 } from "@/tests/presentation/mocks";
 import { mockSurveyResultModel } from "@/tests/domain/mocks";
+import { LoadSurveyResultController } from "@/presentation/controllers";
+import { LoadSurveyResult } from "@/domain/usecases";
+import { LoadSurveyById } from "@/domain/usecases/load-survey-by-id";
+import { HttpRequest } from "@/presentation/protocols";
 
 type SutTypes = {
   sut: LoadSurveyResultController;

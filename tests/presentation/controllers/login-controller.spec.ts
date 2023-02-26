@@ -5,13 +5,10 @@ import {
   serverError,
   unauthorized,
 } from "@/presentation/helpers/http/http-helper";
-import {
-  HttpRequest,
-  Authentication,
-  Validation,
-} from "../../../src/presentation/controllers/login/login/login-controller-protocols";
-import { LoginController } from "../../../src/presentation/controllers/login/login/login-controller";
 import { mockAuthentication, mockValidation } from "@/tests/presentation/mocks";
+import { LoginController } from "@/presentation/controllers";
+import { HttpRequest, Validation } from "@/presentation/protocols";
+import { Authentication } from "@/domain/usecases";
 
 type SutTypes = {
   sut: LoginController;
