@@ -7,7 +7,6 @@ import {
 } from "./load-survey-result-controller-protocols";
 import {
   forbidden,
-  noContent,
   ok,
   serverError,
 } from "@/presentation/helpers/http/http-helper";

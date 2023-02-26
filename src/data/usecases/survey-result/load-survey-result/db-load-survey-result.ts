@@ -3,7 +3,7 @@ import {
   LoadSurveyResult,
   LoadSurveyResultRepository,
   SurveyResultModel,
-  SurveyModel
+  SurveyModel,
 } from "./db-load-survey-result-protocols";
 
 export class DbLoadSurveyResult implements LoadSurveyResult {
@@ -19,24 +19,24 @@ export class DbLoadSurveyResult implements LoadSurveyResult {
     );
 
     if (!surveyResult) {
-      const survey = await this.loadSurveyByIdRepository.loadById(surveyId)
-      surveyResult = this.makeEmptyResult(survey)
+      const survey = await this.loadSurveyByIdRepository.loadById(surveyId);
+      surveyResult = this.makeEmptyResult(survey);
     }
-    
+
     return surveyResult;
   }
 
-  private makeEmptyResult (survey: SurveyModel): SurveyResultModel {
+  private makeEmptyResult(survey: SurveyModel): SurveyResultModel {
     return {
       surveyId: survey.id,
       question: survey.question,
       date: survey.date,
-      answers: survey.answers.map(answer => ({
+      answers: survey.answers.map((answer) => ({
         ...answer,
         count: 0,
         percent: 0,
-        // isCurrentAccountAnswer: false
-      }))
-    }
+        isCurrentAccountAnswer: false,
+      })),
+    };
   }
 }
