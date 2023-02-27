@@ -1,6 +1,5 @@
 import {
   LoadAccountByToken,
-  HttpRequest,
   HttpResponse,
   Middleware,
 } from "./auth-middleware-protocols";
@@ -17,9 +16,9 @@ export class AuthMiddleware implements Middleware {
     private readonly role?: string
   ) {}
 
-  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle(request: AuthMiddleware.Request): Promise<HttpResponse> {
     try {
-      const accessToken = httpRequest.headers?.["x-access-token"];
+      const { accessToken } = request;
 
       if (accessToken) {
         const account = await this.loadAccountByToken.load(
@@ -36,4 +35,10 @@ export class AuthMiddleware implements Middleware {
       return serverError(err);
     }
   }
+}
+
+export namespace AuthMiddleware {
+  export type Request = {
+    accessToken?: string;
+  };
 }

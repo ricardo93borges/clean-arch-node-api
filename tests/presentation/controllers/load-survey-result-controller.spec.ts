@@ -13,7 +13,6 @@ import { mockSurveyResultModel } from "@/tests/domain/mocks";
 import { LoadSurveyResultController } from "@/presentation/controllers";
 import { LoadSurveyResult } from "@/domain/usecases";
 import { LoadSurveyById } from "@/domain/usecases/load-survey-by-id";
-import { HttpRequest } from "@/presentation/protocols";
 
 type SutTypes = {
   sut: LoadSurveyResultController;
@@ -21,10 +20,8 @@ type SutTypes = {
   loadSurveyByIdStub: LoadSurveyById;
 };
 
-const mockRequest = (): HttpRequest => ({
-  params: {
-    surveyId: "surveyId",
-  },
+const mockRequest = (): LoadSurveyResultController.Request => ({
+  surveyId: "surveyId",
   accountId: "accountId",
 });
 
@@ -58,7 +55,7 @@ describe("LoadSurveyResultController Controller", () => {
 
     await sut.handle(request);
 
-    expect(loadByIdSpy).toHaveBeenCalledWith(request.params.surveyId);
+    expect(loadByIdSpy).toHaveBeenCalledWith(request.surveyId);
   });
 
   it("should return 403 if LoadSurveyById returns null", async () => {
@@ -77,7 +74,7 @@ describe("LoadSurveyResultController Controller", () => {
       .spyOn(loadSurveyByIdStub, "loadById")
       .mockRejectedValueOnce(new Error());
 
-    const httpResponse = await sut.handle({});
+    const httpResponse = await sut.handle(mockRequest());
 
     expect(httpResponse).toEqual(serverError(new Error()));
   });
@@ -96,7 +93,7 @@ describe("LoadSurveyResultController Controller", () => {
     const { sut, loadSurveyResultStub } = makeSut();
     jest.spyOn(loadSurveyResultStub, "load").mockRejectedValueOnce(new Error());
 
-    const httpResponse = await sut.handle({});
+    const httpResponse = await sut.handle(mockRequest());
 
     expect(httpResponse).toEqual(serverError(new Error()));
   });

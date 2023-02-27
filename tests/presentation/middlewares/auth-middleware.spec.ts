@@ -5,10 +5,7 @@ import {
 } from "@/presentation/helpers/http/http-helper";
 import { AccessDeniedError } from "@/presentation/errors";
 import { AuthMiddleware } from "../../../src/presentation/middlewares/auth-middleware";
-import {
-  LoadAccountByToken,
-  HttpRequest,
-} from "../../../src/presentation/middlewares/auth-middleware-protocols";
+import { LoadAccountByToken } from "../../../src/presentation/middlewares/auth-middleware-protocols";
 import { mockLoadAccountByToken } from "../mocks";
 
 type SutTypes = {
@@ -16,10 +13,8 @@ type SutTypes = {
   loadAccountByTokenStub: LoadAccountByToken;
 };
 
-const mockRequest = (): HttpRequest => ({
-  headers: {
-    "x-access-token": "token",
-  },
+const mockRequest = (): AuthMiddleware.Request => ({
+  accessToken: "token",
 });
 
 const makeSut = (role?: string): SutTypes => {

@@ -8,14 +8,15 @@ import { mockLoadSurveys } from "../mocks";
 import { mockSurveyModels } from "@/tests/domain/mocks";
 import { LoadSurveysController } from "@/presentation/controllers";
 import { LoadSurveys } from "@/domain/usecases";
-import { HttpRequest } from "@/presentation/protocols";
 
 type SutTypes = {
   sut: LoadSurveysController;
   loadSurveysStub: LoadSurveys;
 };
 
-const mockRequest = (): HttpRequest => ({ accountId: "accountId" });
+const mockRequest = (): LoadSurveysController.Request => ({
+  accountId: "accountId",
+});
 
 const makeSut = (): SutTypes => {
   const loadSurveysStub = mockLoadSurveys();
