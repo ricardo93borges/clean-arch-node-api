@@ -1,6 +1,6 @@
 import { AccountModel } from "@/domain/models/account";
-import { AddAccountParams } from "@/domain/usecases/add-account";
-import { AuthenticationParams } from "@/domain/usecases/authentication";
+import { AddAccount } from "@/domain/usecases/add-account";
+import { Authentication } from "@/domain/usecases/authentication";
 
 export const mockAccountModel = (): AccountModel => ({
   id: "any_id",
@@ -9,13 +9,13 @@ export const mockAccountModel = (): AccountModel => ({
   password: "any_password",
 });
 
-export const mockAccountParams = (): AddAccountParams => ({
+export const mockAccountParams = (): AddAccount.Params => ({
   name: "any_name",
   email: "any_email@email.com",
   password: "any_password",
 });
 
-export const mockAuthentication = (): AuthenticationParams => ({
+export const mockAuthentication = (): Authentication.Params => ({
   email: "email@email.com",
   password: "password",
 });

@@ -2,13 +2,14 @@ import { AddAccountRepository } from "@/data/protocols/db/account/add-account-re
 import { LoadAccountByTokenRepository } from "@/data/protocols/db/account/load-account-by-token-repository";
 import { UpdateAccessTokenRepository } from "@/data/protocols/db/account/update-access-token-repository";
 import { AccountModel } from "@/domain/models/account";
-import { AddAccountParams } from "@/domain/usecases";
 import { mockAccountModel } from "@/tests/domain/mocks";
 import { LoadAccountByEmailRepository } from "@/data/protocols";
 
 export const mockAddAccountRepository = (): AddAccountRepository => {
   class AddAccountRepositoryStub implements AddAccountRepository {
-    async add(accountData: AddAccountParams): Promise<AccountModel> {
+    async add(
+      accountData: AddAccountRepository.Params
+    ): Promise<AddAccountRepository.Result> {
       return Promise.resolve(mockAccountModel());
     }
   }
@@ -33,7 +34,10 @@ export const mockLoadAccountByTokenRepository =
     class LoadAccountByTokenRepositoryStub
       implements LoadAccountByTokenRepository
     {
-      async loadByToken(token: string, role?: string): Promise<AccountModel> {
+      async loadByToken(
+        token: string,
+        role?: string
+      ): Promise<LoadAccountByTokenRepository.Result> {
         return Promise.resolve(mockAccountModel());
       }
     }
