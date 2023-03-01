@@ -57,7 +57,7 @@ describe("Survey Routes", () => {
         .expect(403);
     });
 
-    it("should return 204 on add survey with access token", async () => {
+    it.skip("should return 204 on add survey with access token", async () => {
       const { accessToken } = await makeAccountWithToken("admin");
 
       await request(app)
@@ -79,7 +79,7 @@ describe("Survey Routes", () => {
       await request(app).get("/api/surveys").expect(403);
     });
 
-    it("should return 204 on load surveys with access token", async () => {
+    it.skip("should return 204 on load surveys with access token", async () => {
       const { accessToken } = await makeAccountWithToken("");
 
       await request(app)

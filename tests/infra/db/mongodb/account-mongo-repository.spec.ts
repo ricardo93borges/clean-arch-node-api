@@ -48,6 +48,24 @@ describe("Account Mongo Repository", () => {
     });
   });
 
+  describe("checkByEmail()", () => {
+    it("should return true if checkByEmail returns true", async () => {
+      const sut = makeSut();
+      await accountCollection.insertOne(mockAccountParams());
+      const exists = await sut.checkByEmail("any_email@email.com");
+
+      expect(exists).toBe(true);
+    });
+
+    it("should return false if checkByEmail returns false", async () => {
+      const sut = makeSut();
+
+      const exists = await sut.checkByEmail("any_email@email.com");
+
+      expect(exists).toBe(false);
+    });
+  });
+
   describe("loadByToken()", () => {
     it("should return an account on loadByToken without role", async () => {
       const sut = makeSut();

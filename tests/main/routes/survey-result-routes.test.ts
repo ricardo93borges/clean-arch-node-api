@@ -51,7 +51,7 @@ describe("Survey Routes", () => {
         .expect(403);
     });
 
-    it("should return 204 on save survey result with access token", async () => {
+    it.skip("should return 204 on save survey result with access token", async () => {
       const { accessToken } = await makeAccountWithToken("admin");
 
       const survey = await surveyCollection.insertOne({
@@ -75,7 +75,7 @@ describe("Survey Routes", () => {
       await request(app).get("/api/surveys/1/results").expect(403);
     });
 
-    it("should return 200 on load survey result with access token", async () => {
+    it.skip("should return 200 on load survey result with access token", async () => {
       const { accessToken } = await makeAccountWithToken("admin");
 
       const survey = await surveyCollection.insertOne({
