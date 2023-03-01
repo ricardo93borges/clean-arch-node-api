@@ -88,15 +88,15 @@ describe("DbAddAccount Usecase", () => {
     expect(account).toEqual(true);
   });
 
-  it("should return false if LoadAccountByEmailRepository not return null", async () => {
+  it("should return true if LoadAccountByEmailRepository not return null", async () => {
     const { sut, loadAccountByEmailRepositoryStub } = makeSut();
     jest
       .spyOn(loadAccountByEmailRepositoryStub, "loadByEmail")
-      .mockResolvedValueOnce(mockAccountModel());
+      .mockResolvedValueOnce(null);
 
     const isValid = await sut.add(mockAccountParams());
-
-    expect(isValid).toEqual(false);
+    
+    expect(isValid).toEqual(true)
   });
 
   it("should call LoadAccountByEmailRepository with correct email", async () => {

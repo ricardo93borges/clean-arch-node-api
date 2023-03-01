@@ -10,7 +10,7 @@ export const mockAddAccountRepository = (): AddAccountRepository => {
     async add(
       accountData: AddAccountRepository.Params
     ): Promise<AddAccountRepository.Result> {
-      return Promise.resolve(mockAccountModel());
+      return Promise.resolve(true);
     }
   }
 
