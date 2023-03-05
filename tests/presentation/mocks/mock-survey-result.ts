@@ -1,17 +1,14 @@
 import {
+  LoadAnswersBySurvey,
+  LoadSurveyResult,
+  CheckSurveyById,
   SaveSurveyResult,
-  SaveSurveyResultParams,
-} from "@/domain/usecases/save-survey-result";
-import { LoadAnswersBySurvey } from "@/domain/usecases/load-answers-by-survey";
-import { SurveyModel } from "@/domain/models/survey";
-import { SurveyResultModel } from "@/domain/models/survey-result";
-import { LoadSurveyResult } from "@/domain/usecases/load-survey-result";
+} from "@/domain/usecases";
 import { mockSurveyModel, mockSurveyResultModel } from "@/tests/domain/mocks";
-import { CheckSurveyById } from "@/domain/usecases";
 
 export const mockSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
-    save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
+    save(data: SaveSurveyResult.Params): Promise<SaveSurveyResult.Result> {
       return Promise.resolve(mockSurveyResultModel());
     }
   }
@@ -21,7 +18,10 @@ export const mockSaveSurveyResult = (): SaveSurveyResult => {
 
 export const mockLoadSurveyResult = (): LoadSurveyResult => {
   class LoadSurveyResultStub implements LoadSurveyResult {
-    load(surveyId: string, accountId: string): Promise<SurveyResultModel> {
+    load(
+      surveyId: string,
+      accountId: string
+    ): Promise<LoadSurveyResult.Result> {
       return Promise.resolve(mockSurveyResultModel());
     }
   }
