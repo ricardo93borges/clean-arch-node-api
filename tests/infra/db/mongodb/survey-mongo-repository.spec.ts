@@ -1,5 +1,9 @@
 import { Collection } from "mongodb";
-import { mockAccountParams, mockSurveyModels } from "@/tests/domain/mocks";
+import {
+  mockAccountParams,
+  mockAddSurveyParams,
+  mockSurveyModels,
+} from "@/tests/domain/mocks";
 import { MongoHelper, SurveyMongoRepository } from "@/infra/db/mongodb";
 
 let surveyCollection: Collection;
@@ -91,12 +95,7 @@ describe("Survey Mongo Repository", () => {
       const res = await surveyCollection.insertOne({
         question: "question",
         date: new Date(),
-        answers: [
-          {
-            image: "image",
-            answer: "answer",
-          },
-        ],
+        answers: [],
       });
       const id = res.insertedId.toHexString();
       const sut = makeSut();
@@ -104,6 +103,36 @@ describe("Survey Mongo Repository", () => {
       const survey = await sut.loadById(id);
 
       expect(survey).toBeTruthy();
+    });
+  });
+
+  describe("loadAnswers()", () => {
+    it("should load answers on success", async () => {
+      const survey = mockAddSurveyParams();
+      const res = await surveyCollection.insertOne(survey);
+
+      const id = res.insertedId.toHexString();
+      const sut = makeSut();
+
+      const answers = await sut.loadAnswers(id);
+
+      expect(answers).toEqual([survey.answers[0].answer]);
+    });
+  });
+
+  describe("checkById()", () => {
+    it("should check if a survey exists", async () => {
+      const res = await surveyCollection.insertOne({
+        question: "question",
+        date: new Date(),
+        answers: [],
+      });
+      const id = res.insertedId.toHexString();
+      const sut = makeSut();
+
+      const exists = await sut.checkById(id);
+
+      expect(exists).toBe(true);
     });
   });
 });

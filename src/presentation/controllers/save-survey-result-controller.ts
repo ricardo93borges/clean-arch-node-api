@@ -6,12 +6,12 @@ import {
 import { InvalidParamError } from "@/presentation/errors";
 import { Controller, HttpResponse } from "@/presentation/protocols";
 import { SaveSurveyResult } from "@/domain/usecases";
-import { LoadSurveyById } from "@/domain/usecases/load-survey-by-id";
+import { LoadAnswersBySurvey } from "@/domain/usecases/";
 
 export class SaveSurveyResultController implements Controller {
   constructor(
     private readonly saveSurveyResult: SaveSurveyResult,
-    private readonly loadSurveyById: LoadSurveyById
+    private readonly loadAnswersBySurvey: LoadAnswersBySurvey
   ) {}
 
   async handle(
@@ -20,15 +20,12 @@ export class SaveSurveyResultController implements Controller {
     try {
       const { accountId, answer, surveyId } = request;
 
-      const survey = await this.loadSurveyById.loadById(surveyId);
+      const answers = await this.loadAnswersBySurvey.loadAnswers(surveyId);
 
-      if (survey) {
-        const answers = survey.answers.map((a) => a.answer);
-        if (!answers.includes(answer)) {
-          return forbidden(new InvalidParamError("answer"));
-        }
-      } else {
+      if (!answers.length) {
         return forbidden(new InvalidParamError("surveyId"));
+      } else if (!answers.includes(answer)) {
+        return forbidden(new InvalidParamError("answer"));
       }
 
       await this.saveSurveyResult.save({

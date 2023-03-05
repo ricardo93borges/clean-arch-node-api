@@ -5,13 +5,12 @@ import {
 } from "@/presentation/helpers/http/http-helper";
 import { InvalidParamError } from "@/presentation/errors";
 import { Controller, HttpResponse } from "@/presentation/protocols";
-import { LoadSurveyResult } from "@/domain/usecases";
-import { LoadSurveyById } from "@/domain/usecases/load-survey-by-id";
+import { CheckSurveyById, LoadSurveyResult } from "@/domain/usecases";
 
 export class LoadSurveyResultController implements Controller {
   constructor(
     private readonly loadSurveyResult: LoadSurveyResult,
-    private readonly loadSurveyById: LoadSurveyById
+    private readonly checkSurveyById: CheckSurveyById
   ) {}
 
   async handle(
@@ -20,9 +19,9 @@ export class LoadSurveyResultController implements Controller {
     try {
       const { surveyId, accountId } = request;
 
-      const survey = await this.loadSurveyById.loadById(surveyId);
+      const exists = await this.checkSurveyById.checkById(surveyId);
 
-      if (!survey) {
+      if (!exists) {
         return forbidden(new InvalidParamError("surveyId"));
       }
 

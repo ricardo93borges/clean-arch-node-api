@@ -2,11 +2,12 @@ import {
   SaveSurveyResult,
   SaveSurveyResultParams,
 } from "@/domain/usecases/save-survey-result";
-import { LoadSurveyById } from "@/domain/usecases/load-survey-by-id";
+import { LoadAnswersBySurvey } from "@/domain/usecases/load-answers-by-survey";
 import { SurveyModel } from "@/domain/models/survey";
 import { SurveyResultModel } from "@/domain/models/survey-result";
 import { LoadSurveyResult } from "@/domain/usecases/load-survey-result";
 import { mockSurveyModel, mockSurveyResultModel } from "@/tests/domain/mocks";
+import { CheckSurveyById } from "@/domain/usecases";
 
 export const mockSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
@@ -28,12 +29,24 @@ export const mockLoadSurveyResult = (): LoadSurveyResult => {
   return new LoadSurveyResultStub();
 };
 
-export const mockLoadSurveyById = (): LoadSurveyById => {
-  class LoadSurveysByIdStub implements LoadSurveyById {
-    loadById(id: string): Promise<SurveyModel> {
-      return Promise.resolve(mockSurveyModel());
+export const mockLoadAnswersBySurvey = (): LoadAnswersBySurvey => {
+  class LoadAnswersBySurveyStub implements LoadAnswersBySurvey {
+    loadAnswers(id: string): Promise<LoadAnswersBySurvey.Result> {
+      const survey = mockSurveyModel();
+      const answers = survey.answers.map((a) => a.answer);
+      return Promise.resolve(answers);
     }
   }
 
-  return new LoadSurveysByIdStub();
+  return new LoadAnswersBySurveyStub();
+};
+
+export const mockCheckSurveyById = (): CheckSurveyById => {
+  class CheckSurveyByIdStub implements CheckSurveyById {
+    checkById(id: string): Promise<boolean> {
+      return Promise.resolve(true);
+    }
+  }
+
+  return new CheckSurveyByIdStub();
 };
